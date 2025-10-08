@@ -1,30 +1,78 @@
-@if (isDataReady) {
-<table class="table">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Full Name</th>
-            <th>Email</th>
-            <th>Update List</th>
-        </tr>
-    </thead>
-    <tbody>
-        @for (emp of icrudSvc.allEmployee; track emp.employeeId) {
-        <tr>
-            <td>{{ emp.employeeId }}</td>
-            <td>{{ emp.fullName }}</td>
-            <td>{{ emp.email }}</td>
-            <td>
-                <button type="button" class="btn btn-primary">Edit</button>
-                <button type="button" class="btn btn-danger">Delete</button>
-            </td>
+<div class="row">
+    <div class="col-8">
+        <div class="card">
+            <div class="card-header ng-success">
+                Employees
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-12">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Contact no.Email</th>
+                                    <th>Email.</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            @if (icrudSvc.isDataReady) {
+                            <tbody>
+                                @for (emp of icrudSvc.employeeList; track emp.id) {
+                                <tr>
+                                    <td>{{ emp.id }}</td>
+                                    <td>{{ emp.name }}</td>
+                                    <td>{{ emp.phone }}</td>
+                                    <td>{{ emp.email }}</td>
+                                    <td>
+                                        <button type="button" class="btn btn-primary">Edit</button>
+                                        <button type="button" class="btn btn-danger"(click)="crudsvc.onDelete(emp.id)">Delete</button>
+                                    </td>
 
-        </tr>
-        }
-    </tbody>
+                                </tr>
+                                }
+                            </tbody>
+                            } @else{
+                            <div class="spinner-border"></div>
+                            }
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-</table>
-
-} @else{
-<div class="spinner-border"></div>
-}
+</div>
+<div class="col-4">
+    <div class="card">
+        <div class="card-header ng-success">
+            New Employee
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-6">
+                    <label for="">Name</label>
+                    <input type="text" [(ngModel)]="icrudSvc.empObj.name" [(ngModel)]="icrudSvc.empObj.name"
+                        class="form-control">
+                </div>
+                <div class="col-6">
+                    <label for="">Email</label>
+                    <input type="text" [(ngModel)]="icrudSvc.empObj.email" class="form-control">
+                </div>
+                <div class="col-6">
+                    <label for="">Phone no.</label>
+                    <input type="text" [(ngModel)]="icrudSvc.empObj.phone" class="form-control">
+                </div>
+            </div>
+            <div class="row pt-2">
+                <div class="col-6 text-center">
+                    <button class="btn btn-secondary">Reset</button>
+                </div>
+                <div class="col-6 text-center">
+                    <button class="btn btn-success" (click)="crudsvc.onSaveEmployee()">Save Employee</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
